@@ -1,9 +1,3 @@
-いいですね 👍
-そのまま GitHub に置ける **実用的 README.md（2bo ブランド用）** を作ります。
-Hugo + Tailwind + GitHub Pages 前提にしてあります。
-
----
-
 # 📘 2bo.dev Developer Blog
 
 2bo.dev は、**2boブランドのツール開発ノウハウ・技術情報を発信する開発者ブログ**です。
@@ -238,13 +232,3 @@ For inquiries or collaboration:
 Build small, fast, reliable tools.
 Ship continuously.
 Accumulate engineering assets.
-
----
-
-もしよければ、次はかなり実務寄りにできます👇
-
-* 🔥 GitHub Actions 自動デプロイ付き README 版
-* 🔥 SEO / OGP 完全対応 README
-* 🔥 OSS 公開向け README（スター集めやすい構成）
-
-どれ作ります？
