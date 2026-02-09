@@ -1,0 +1,67 @@
+{{ define "main" }}
+<div class="min-h-screen bg-white text-gray-700 font-sans">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between p-6 border-b border-gray-100">
+        <div class="text-2xl font-bold text-brand"><a href="/">2bo.dev</a></div>
+        <nav class="space-x-4">
+            <a href="/" class="hover:text-brand-light transition">Home</a>
+            <a href="/blog" class="hover:text-brand-light transition">Blog</a>
+            <a href="/about" class="hover:text-brand-light transition">About</a>
+            <a href="https://github.com/2bo-velocity" class="hover:text-brand-light transition" target="_blank"
+                rel="noopener noreferrer">
+                <i data-lucide="github"></i>
+            </a>
+            <a href="https://x.com/2bo_velocity" class="hover:text-brand-light transition" target="_blank"
+                rel="noopener noreferrer">
+                <i data-lucide="twitter"></i>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="text-center py-20 px-4">
+        <h1 class="text-5xl font-bold mb-4 text-brand">2bo 開発者ブログ</h1>
+        <p class="text-gray-700 text-xl max-w-2xl mx-auto leading-relaxed">
+            Rust / Tauri / TailwindCSS を使った小型ツール開発ノウハウを公開しています。<br>
+            月1回のアプリリリースに合わせて記事を更新。
+        </p>
+    </section>
+
+    <!-- Recent Posts -->
+    <section class="max-w-5xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+        {{ range first 3 (where .Site.RegularPages "Type" "in" (slice "posts" "blog")) }}
+        <div class="bg-gray-50 p-6 rounded-lg hover:bg-gray-100 transition shadow-sm border border-gray-100">
+            <h2 class="text-xl font-bold text-brand mb-2"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+            <p class="text-gray-500 text-sm mb-4">{{ .Date.Format "2006-01-02" }}</p>
+            <p class="text-gray-700 mb-4 line-clamp-3">{{ .Summary }}</p>
+            <a href="{{ .RelPermalink }}"
+                class="text-brand hover:text-brand-light font-semibold inline-flex items-center">
+                続きを読む <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+            </a>
+        </div>
+        {{ end }}
+    </section>
+
+    <!-- Taxonomy -->
+    <section class="max-w-5xl mx-auto px-6 py-8">
+        <h3 class="text-xl font-bold text-brand mb-4">Categories / Tags</h3>
+        <div class="flex flex-wrap gap-2">
+            {{ range .Site.Taxonomies.tags }}
+            <a href="{{ .Page.RelPermalink }}"
+                class="px-3 py-1 bg-gray-100 rounded hover:bg-brand-light hover:text-white text-brand text-sm transition">{{
+                .Page.Title }}</a>
+            {{ end }}
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-500 py-8 border-t border-gray-100 mt-12">
+        <p>© {{ now.Year }} 2bo.dev |
+            <a href="https://github.com/2bo-velocity" class="hover:text-brand-light">GitHub</a> |
+            <a href="https://x.com/2bo_velocity" class="hover:text-brand-light">X</a>
+        </p>
+    </footer>
+
+</div>
+{{ end }}

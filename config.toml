@@ -1,0 +1,14 @@
+baseURL = "https://2bo.dev/"
+title = "2bo.dev 開発者ブログ"
+languageCode = "ja-jp"
+
+
+paginate = 5
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[markup]
+  [markup.highlight]
+    style = "github"

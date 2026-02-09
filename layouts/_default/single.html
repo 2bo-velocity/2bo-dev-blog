@@ -1,0 +1,36 @@
+{{ define "main" }}
+<div class="min-h-screen bg-white text-gray-700 font-sans">
+    <!-- Header -->
+    <header class="flex items-center justify-between p-6 border-b border-gray-100 h-20">
+        <div class="text-2xl font-bold text-brand"><a href="/">2bo.dev</a></div>
+        <nav class="space-x-4">
+            <a href="/" class="hover:text-brand-light transition">Home</a>
+            <a href="/blog" class="hover:text-brand-light transition">Blog</a>
+            <a href="/about" class="hover:text-brand-light transition">About</a>
+        </nav>
+    </header>
+
+    <article class="max-w-3xl mx-auto px-6 py-12">
+        <h1 class="text-3xl md:text-4xl font-bold text-brand mb-4">{{ .Title }}</h1>
+        <div class="text-gray-500 mb-8 flex flex-wrap gap-4 text-sm items-center">
+            <span>{{ .Date.Format "2006-01-02" }}</span>
+            {{ if .Params.tags }}
+            <div class="flex gap-2">
+                {{ range .Params.tags }}
+                <span class="px-2 py-1 bg-gray-100 rounded text-brand">{{ . }}</span>
+                {{ end }}
+            </div>
+            {{ end }}
+        </div>
+
+        <div
+            class="prose prose-slate max-w-none prose-headings:text-brand prose-a:text-brand hover:prose-a:text-brand-light">
+            {{ .Content }}
+        </div>
+    </article>
+
+    <footer class="text-center text-gray-500 py-6 border-t border-gray-100 mt-12">
+        <p>© {{ now.Year }} 2bo.dev</p>
+    </footer>
+</div>
+{{ end }}
