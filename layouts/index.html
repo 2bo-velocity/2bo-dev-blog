@@ -1,24 +1,6 @@
 {{ define "main" }}
 <div class="min-h-screen bg-white text-gray-700 font-sans">
 
-    <!-- Header -->
-    <header class="flex items-center justify-between p-6 border-b border-gray-100">
-        <div class="text-2xl font-bold text-brand"><a href="/">2bo.dev</a></div>
-        <nav class="space-x-4">
-            <a href="/" class="hover:text-brand-light transition">Home</a>
-            <a href="/blog" class="hover:text-brand-light transition">Blog</a>
-            <a href="/about" class="hover:text-brand-light transition">About</a>
-            <a href="https://github.com/2bo-velocity" class="hover:text-brand-light transition" target="_blank"
-                rel="noopener noreferrer">
-                <i data-lucide="github"></i>
-            </a>
-            <a href="https://x.com/2bo_velocity" class="hover:text-brand-light transition" target="_blank"
-                rel="noopener noreferrer">
-                <i data-lucide="twitter"></i>
-            </a>
-        </nav>
-    </header>
-
     <!-- Hero -->
     <section class="text-center py-20 px-4">
         <h1 class="text-5xl font-bold mb-4 text-brand">2bo 開発者ブログ</h1>
@@ -54,14 +36,6 @@
             {{ end }}
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="text-center text-gray-500 py-8 border-t border-gray-100 mt-12">
-        <p>© {{ now.Year }} 2bo.dev |
-            <a href="https://github.com/2bo-velocity" class="hover:text-brand-light">GitHub</a> |
-            <a href="https://x.com/2bo_velocity" class="hover:text-brand-light">X</a>
-        </p>
-    </footer>
 
 </div>
 {{ end }}

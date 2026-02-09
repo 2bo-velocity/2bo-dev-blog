@@ -1,0 +1,58 @@
+<header class="border-b border-gray-100 bg-white sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between relative">
+        <div class="text-2xl font-bold text-brand z-50"><a href="/">2bo.dev</a></div>
+
+        <!-- Mobile Menu Button -->
+        <button id="menu-btn" class="block md:hidden text-brand focus:outline-none z-50">
+            <i data-lucide="menu" id="menu-icon"></i>
+        </button>
+
+        <!-- Navigation Links -->
+        <nav id="menu"
+            class="hidden w-full md:block md:w-auto absolute md:static top-full left-0 bg-white md:bg-transparent shadow-lg md:shadow-none border-t border-gray-100 md:border-t-0 p-6 md:p-0 transition-all z-40">
+            <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 text-center">
+                <li><a href="/" class="block hover:text-brand-light transition font-medium">Home</a></li>
+                <li><a href="/blog" class="block hover:text-brand-light transition font-medium">Blog</a></li>
+                <li><a href="/about" class="block hover:text-brand-light transition font-medium">About</a></li>
+                <li class="flex justify-center md:inline-block">
+                    <a href="https://github.com/2bo-velocity" class="hover:text-brand-light transition" target="_blank"
+                        rel="noopener noreferrer">
+                        <i data-lucide="github"></i>
+                    </a>
+                </li>
+                <li class="flex justify-center md:inline-block">
+                    <a href="https://x.com/2bo_velocity" class="hover:text-brand-light transition" target="_blank"
+                        rel="noopener noreferrer">
+                        <i data-lucide="twitter"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuBtn = document.getElementById('menu-btn');
+        const menu = document.getElementById('menu');
+        const menuIcon = document.getElementById('menu-icon');
+        let isMenuOpen = false;
+
+        if (menuBtn && menu && menuIcon) {
+            menuBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    menu.classList.remove('hidden');
+                    menuIcon.setAttribute('data-lucide', 'x');
+                } else {
+                    menu.classList.add('hidden');
+                    menuIcon.setAttribute('data-lucide', 'menu');
+                }
+
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            });
+        }
+    });
+</script>
