@@ -112,14 +112,34 @@
         {{ end }}
     </div>
     {{ else }}
-    <div class="text-center py-12">
-        <i data-lucide="inbox" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
-        <p class="text-gray-500 text-lg">このタグの記事がまだありません</p>
+    <!-- 記事がない場合のプレースホルダー -->
+    <div class="text-center py-16">
+        <div class="max-w-md mx-auto">
+            <div class="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i data-lucide="inbox" class="w-12 h-12 text-primary-700"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-3">このタグの記事はまだありません</h3>
+            <p class="text-gray-600 mb-8">
+                「{{ .Title }}」に関する記事は準備中です。<br>
+                他のタグをご覧ください。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/blog" class="btn-primary">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    <span>ブログ一覧へ</span>
+                </a>
+                <a href="/tags" class="btn-secondary">
+                    <i data-lucide="tag" class="w-5 h-5"></i>
+                    <span>タグ一覧へ</span>
+                </a>
+            </div>
+        </div>
     </div>
     {{ end }}
 </section>
 
-<!-- Related Tags -->
+<!-- Related Tags - 記事がある場合のみ表示 -->
+{{ if .Pages }}
 {{ $currentTag := .Title }}
 {{ $relatedTags := slice }}
 {{ range .Pages }}
@@ -159,9 +179,10 @@
     </div>
 </section>
 {{ end }}
+{{ end }}
 
-<!-- Pagination -->
-{{ if or .Paginator.HasPrev .Paginator.HasNext }}
+<!-- Pagination - 記事がある場合のみ表示 -->
+{{ if and .Pages (or .Paginator.HasPrev .Paginator.HasNext) }}
 <section class="container mx-auto px-4 sm:px-6 pb-16 sm:pb-20">
     <nav class="flex items-center justify-center space-x-4">
         {{ if .Paginator.HasPrev }}

@@ -28,14 +28,18 @@
                 </ul>
             </div>
 
-            <!-- Tech Stack -->
+            <!-- Tech Stack - 記事があるタグのみ表示 -->
             <div>
                 <h4 class="font-semibold text-white mb-4">主な技術</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="/tags/rust" class="footer-link">Rust</a></li>
-                    <li><a href="/tags/tauri" class="footer-link">Tauri</a></li>
-                    <li><a href="/tags/tailwindcss" class="footer-link">TailwindCSS</a></li>
-                    <li><a href="/tags/hugo" class="footer-link">Hugo</a></li>
+                    {{- $tags := .Site.Taxonomies.tags -}}
+                    {{- if $tags -}}
+                    {{- range first 4 $tags.ByCount -}}
+                    <li><a href="{{ .Page.RelPermalink }}" class="footer-link">{{ .Page.Title }}</a></li>
+                    {{- end -}}
+                    {{- else -}}
+                    <li class="text-gray-500">準備中...</li>
+                    {{- end -}}
                 </ul>
             </div>
 
