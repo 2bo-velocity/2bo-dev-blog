@@ -1,58 +1,161 @@
-<header class="border-b border-gray-100 bg-white sticky top-0 z-50">
-    <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between relative">
-        <div class="text-2xl font-bold text-brand z-50"><a href="/">2bo.dev</a></div>
+<!-- Header -->
+<header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-gray-200 transition-all duration-300"
+    id="header">
+    <nav class="container mx-auto px-4 sm:px-6 py-4">
+        <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-3 group">
+                <div
+                    class="w-10 h-10 bg-gradient-to-br from-primary-700 to-primary-500 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-primary-500/30">
+                    <span class="text-white font-bold text-xl">2b</span>
+                </div>
+                <span class="text-xl font-bold text-gray-900 hidden sm:inline">2bo.dev</span>
+            </a>
 
-        <!-- Mobile Menu Button -->
-        <button id="menu-btn" class="block md:hidden text-brand focus:outline-none z-50">
-            <i data-lucide="menu" id="menu-icon"></i>
-        </button>
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="/" class="nav-link">
+                    <i data-lucide="home" class="w-4 h-4 inline-block mr-1"></i>
+                    Home
+                </a>
+                <a href="/blog" class="nav-link">
+                    <i data-lucide="file-text" class="w-4 h-4 inline-block mr-1"></i>
+                    Blog
+                </a>
+                <a href="/tags" class="nav-link">
+                    <i data-lucide="tag" class="w-4 h-4 inline-block mr-1"></i>
+                    Tags
+                </a>
+                <a href="/about" class="nav-link">
+                    <i data-lucide="user" class="w-4 h-4 inline-block mr-1"></i>
+                    About
+                </a>
+            </div>
 
-        <!-- Navigation Links -->
-        <nav id="menu"
-            class="hidden w-full md:block md:w-auto absolute md:static top-full left-0 bg-white md:bg-transparent shadow-lg md:shadow-none border-t border-gray-100 md:border-t-0 p-6 md:p-0 transition-all z-40">
-            <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 text-center">
-                <li><a href="/" class="block hover:text-brand-light transition font-medium">Home</a></li>
-                <li><a href="/blog" class="block hover:text-brand-light transition font-medium">Blog</a></li>
-                <li><a href="/about" class="block hover:text-brand-light transition font-medium">About</a></li>
-                <li class="flex justify-center md:inline-block">
-                    <a href="https://github.com/2bo-velocity" class="hover:text-brand-light transition" target="_blank"
-                        rel="noopener noreferrer">
-                        <i data-lucide="github"></i>
-                    </a>
-                </li>
-                <li class="flex justify-center md:inline-block">
-                    <a href="https://x.com/2bo_velocity" class="hover:text-brand-light transition" target="_blank"
-                        rel="noopener noreferrer">
-                        <i data-lucide="twitter"></i>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+            <!-- Desktop Actions -->
+            <div class="hidden lg:flex items-center space-x-3">
+                <a href="https://github.com/2bo-velocity" target="_blank" rel="noopener noreferrer" class="btn-icon"
+                    aria-label="GitHub">
+                    <i data-lucide="github" class="w-5 h-5"></i>
+                </a>
+                <a href="https://x.com/2bo_velocity" target="_blank" rel="noopener noreferrer" class="btn-icon"
+                    aria-label="Twitter">
+                    <i data-lucide="twitter" class="w-5 h-5"></i>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="lg:hidden btn-icon" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
 </header>
 
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 z-50 hidden lg:hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" id="mobile-menu-backdrop"></div>
+
+    <!-- Menu Panel -->
+    <div class="absolute inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl transform transition-transform duration-300"
+        id="mobile-menu-panel" style="transform: translateX(100%);">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-6 border-b border-gray-200">
+            <span class="text-xl font-bold text-gray-900">Menu</span>
+            <button id="mobile-menu-close" class="btn-icon" aria-label="Close menu">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Menu Items -->
+        <nav class="p-6 space-y-2">
+            <a href="/" class="mobile-nav-item">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span>Home</span>
+            </a>
+            <a href="/blog" class="mobile-nav-item">
+                <i data-lucide="file-text" class="w-5 h-5"></i>
+                <span>Blog</span>
+            </a>
+            <a href="/tags" class="mobile-nav-item">
+                <i data-lucide="tag" class="w-5 h-5"></i>
+                <span>Tags</span>
+            </a>
+            <a href="/about" class="mobile-nav-item">
+                <i data-lucide="user" class="w-5 h-5"></i>
+                <span>About</span>
+            </a>
+
+            <div class="pt-6 border-t border-gray-200 space-y-2">
+                <a href="https://github.com/2bo-velocity" target="_blank" rel="noopener noreferrer"
+                    class="mobile-nav-item">
+                    <i data-lucide="github" class="w-5 h-5"></i>
+                    <span>GitHub</span>
+                    <i data-lucide="external-link" class="w-4 h-4 ml-auto"></i>
+                </a>
+                <a href="https://x.com/2bo_velocity" target="_blank" rel="noopener noreferrer" class="mobile-nav-item">
+                    <i data-lucide="twitter" class="w-5 h-5"></i>
+                    <span>Twitter/X</span>
+                    <i data-lucide="external-link" class="w-4 h-4 ml-auto"></i>
+                </a>
+            </div>
+        </nav>
+    </div>
+</div>
+
 <script>
+    // Mobile Menu Toggle
     document.addEventListener('DOMContentLoaded', () => {
-        const menuBtn = document.getElementById('menu-btn');
-        const menu = document.getElementById('menu');
-        const menuIcon = document.getElementById('menu-icon');
-        let isMenuOpen = false;
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
+        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
 
-        if (menuBtn && menu && menuIcon) {
-            menuBtn.addEventListener('click', () => {
-                isMenuOpen = !isMenuOpen;
-                if (isMenuOpen) {
-                    menu.classList.remove('hidden');
-                    menuIcon.setAttribute('data-lucide', 'x');
-                } else {
-                    menu.classList.add('hidden');
-                    menuIcon.setAttribute('data-lucide', 'menu');
-                }
+        function openMobileMenu() {
+            if (mobileMenu && mobileMenuPanel) {
+                mobileMenu.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                // Trigger animation
+                setTimeout(() => {
+                    mobileMenuPanel.style.transform = 'translateX(0)';
+                }, 10);
+            }
+        }
 
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            });
+        function closeMobileMenu() {
+            if (mobileMenu && mobileMenuPanel) {
+                mobileMenuPanel.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+        }
+
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', openMobileMenu);
+        }
+
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+        }
+
+        if (mobileMenuBackdrop) {
+            mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
+        }
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
         }
     });
 </script>

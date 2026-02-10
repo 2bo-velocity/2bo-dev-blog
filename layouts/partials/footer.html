@@ -1,9 +1,78 @@
-<footer class="text-center text-gray-500 py-8 border-t border-gray-100 mt-12 bg-white">
-    <div class="max-w-5xl mx-auto px-6">
-        <p class="mb-2">© {{ now.Year }} 2bo.dev</p>
-        <div class="space-x-4">
-            <a href="https://github.com/2bo-velocity" class="hover:text-brand-light transition">GitHub</a>
-            <a href="https://x.com/2bo_velocity" class="hover:text-brand-light transition">X</a>
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-300 mt-20">
+    <div class="container mx-auto px-4 sm:px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <!-- Brand -->
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-primary-700 to-primary-500 rounded-lg flex items-center justify-center shadow-lg shadow-primary-500/30">
+                        <span class="text-white font-bold text-xl">2b</span>
+                    </div>
+                    <span class="text-xl font-bold text-white">2bo.dev</span>
+                </div>
+                <p class="text-sm text-gray-400 leading-relaxed">
+                    月1アプリ開発で学んだ<br>
+                    技術ノウハウを公開
+                </p>
+            </div>
+
+            <!-- Links -->
+            <div>
+                <h4 class="font-semibold text-white mb-4">コンテンツ</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/" class="footer-link">ホーム</a></li>
+                    <li><a href="/blog" class="footer-link">ブログ</a></li>
+                    <li><a href="/tags" class="footer-link">タグ</a></li>
+                    <li><a href="/about" class="footer-link">About</a></li>
+                </ul>
+            </div>
+
+            <!-- Tech Stack -->
+            <div>
+                <h4 class="font-semibold text-white mb-4">主な技術</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/tags/rust" class="footer-link">Rust</a></li>
+                    <li><a href="/tags/tauri" class="footer-link">Tauri</a></li>
+                    <li><a href="/tags/tailwindcss" class="footer-link">TailwindCSS</a></li>
+                    <li><a href="/tags/hugo" class="footer-link">Hugo</a></li>
+                </ul>
+            </div>
+
+            <!-- Social -->
+            <div>
+                <h4 class="font-semibold text-white mb-4">Follow</h4>
+                <div class="flex space-x-4">
+                    <a href="https://github.com/2bo-velocity" target="_blank" rel="noopener noreferrer"
+                        class="footer-social-icon" aria-label="GitHub">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://x.com/2bo_velocity" target="_blank" rel="noopener noreferrer"
+                        class="footer-social-icon" aria-label="Twitter">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                    <a href="/index.xml" class="footer-social-icon" aria-label="RSS">
+                        <i data-lucide="rss" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom -->
+        <div class="border-t border-gray-800 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 gap-4">
+                <p>© {{ now.Year }} 2bo. All rights reserved.</p>
+                <p>Built with Hugo + TailwindCSS</p>
+            </div>
         </div>
     </div>
 </footer>
+
+<script>
+    // Initialize Lucide icons in footer
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    });
+</script>

@@ -1,36 +1,144 @@
 {{ define "main" }}
-<div class="min-h-screen bg-white text-gray-700 font-sans">
 
-    <!-- Header -->
-    <header class="flex items-center justify-between p-6 border-b border-gray-100">
-        <div class="text-2xl font-bold text-brand"><a href="/">2bo.dev</a></div>
-        <nav class="space-x-4">
-            <a href="/" class="hover:text-brand-light transition">Home</a>
-            <a href="/blog" class="hover:text-brand-light transition">Blog</a>
-            <a href="/about" class="hover:text-brand-light transition">About</a>
-        </nav>
-    </header>
+<!-- Hero Section for Blog List -->
+<section class="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-primary-50 py-16 sm:py-20">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0"
+            style="background-image: radial-gradient(circle at 2px 2px, #1e40af 1px, transparent 0); background-size: 40px 40px;">
+        </div>
+    </div>
 
-    <section class="max-w-5xl mx-auto px-6 py-12">
-        <h1 class="text-3xl font-bold text-brand mb-8 border-b pb-2 border-gray-100">{{ .Title }}</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {{ range .Pages }}
-            <div class="bg-gray-50 p-6 rounded-lg hover:bg-gray-100 transition shadow-sm border border-gray-100">
-                <h2 class="text-xl font-bold text-brand mb-2"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-                <p class="text-gray-500 text-sm mb-2">{{ .Date.Format "2006-01-02" }}</p>
-                <p class="text-gray-700 mb-4 line-clamp-3">{{ .Summary }}</p>
+    <div class="container mx-auto px-4 sm:px-6 relative">
+        <div class="max-w-3xl">
+            <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 animate-fade-in-up">
+                {{ .Title }}
+            </h1>
+            <p class="text-xl text-gray-600 animate-fade-in-up animation-delay-100">
+                {{ if .Params.description }}
+                {{ .Params.description }}
+                {{ else }}
+                技術記事の一覧
+                {{ end }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Posts Grid -->
+<section class="container mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    {{ if .Pages }}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {{ range .Pages }}
+        <article class="blog-card animate-on-scroll group">
+            <!-- Image -->
+            <div
+                class="relative overflow-hidden rounded-t-xl aspect-video bg-gradient-to-br from-primary-100 to-primary-50">
+                {{ if .Params.image }}
+                <img src="{{ .Params.image }}" alt="{{ .Title }}"
+                    class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                {{ else }}
+                <div class="w-full h-full flex items-center justify-center">
+                    <i data-lucide="file-text" class="w-16 h-16 text-primary-300"></i>
+                </div>
+                {{ end }}
+
+                <!-- Category Badge -->
+                {{ with .Params.categories }}
+                <div class="absolute top-4 left-4">
+                    <span
+                        class="px-3 py-1 bg-primary-700 text-white text-sm font-medium rounded-full backdrop-blur-sm shadow-lg">
+                        {{ index . 0 }}
+                    </span>
+                </div>
+                {{ end }}
+            </div>
+
+            <!-- Content -->
+            <div class="p-6">
+                <!-- Meta -->
+                <div class="flex items-center space-x-4 text-sm text-gray-500 mb-3">
+                    <span class="flex items-center space-x-1">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
+                    </span>
+                    <span class="flex items-center space-x-1">
+                        <i data-lucide="clock" class="w-4 h-4"></i>
+                        <span>{{ .ReadingTime }}分</span>
+                    </span>
+                </div>
+
+                <!-- Title -->
+                <h2
+                    class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary-700 transition-colors">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </h2>
+
+                <!-- Excerpt -->
+                <p class="text-gray-600 mb-4 line-clamp-2 text-sm leading-relaxed">
+                    {{ .Summary }}
+                </p>
+
+                <!-- Tags -->
+                {{ if .Params.tags }}
+                <div class="flex flex-wrap gap-2 mb-4">
+                    {{ range first 3 .Params.tags }}
+                    <a href="/tags/{{ . | urlize }}" class="tag">{{ . }}</a>
+                    {{ end }}
+                </div>
+                {{ end }}
+
+                <!-- Read More Link -->
                 <a href="{{ .RelPermalink }}"
-                    class="text-brand hover:text-brand-light font-semibold inline-flex items-center">
-                    続きを読む <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                    class="inline-flex items-center space-x-2 text-primary-700 font-medium group/link">
+                    <span>続きを読む</span>
+                    <i data-lucide="arrow-right"
+                        class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform"></i>
                 </a>
             </div>
-            {{ end }}
-        </div>
-    </section>
+        </article>
+        {{ end }}
+    </div>
+    {{ else }}
+    <div class="text-center py-12">
+        <i data-lucide="inbox" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
+        <p class="text-gray-500 text-lg">まだ記事がありません</p>
+    </div>
+    {{ end }}
+</section>
 
-    <footer class="text-center text-gray-500 py-6 border-t border-gray-100 mt-12">
-        <p>© {{ now.Year }} 2bo.dev</p>
-    </footer>
+<!-- Pagination -->
+{{ if or .Paginator.HasPrev .Paginator.HasNext }}
+<section class="container mx-auto px-4 sm:px-6 pb-16 sm:pb-20">
+    <nav class="flex items-center justify-center space-x-4">
+        {{ if .Paginator.HasPrev }}
+        <a href="{{ .Paginator.Prev.URL }}" class="btn-secondary">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            <span>前へ</span>
+        </a>
+        {{ end }}
 
-</div>
+        <span class="text-gray-600">
+            {{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}
+        </span>
+
+        {{ if .Paginator.HasNext }}
+        <a href="{{ .Paginator.Next.URL }}" class="btn-secondary">
+            <span>次へ</span>
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </a>
+        {{ end }}
+    </nav>
+</section>
+{{ end }}
+
+<script>
+    // Re-initialize Lucide icons after content load
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    });
+</script>
+
 {{ end }}
