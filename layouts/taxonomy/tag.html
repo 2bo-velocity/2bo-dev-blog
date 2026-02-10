@@ -1,0 +1,197 @@
+{{ define "main" }}
+
+<!-- Hero Section for Single Tag -->
+<section class="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-primary-50 py-16 sm:py-20">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0"
+            style="background-image: radial-gradient(circle at 2px 2px, #1e40af 1px, transparent 0); background-size: 40px 40px;">
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 relative">
+        <div class="max-w-3xl">
+            <!-- Breadcrumb -->
+            <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-6 animate-fade-in-up">
+                <a href="/" class="hover:text-primary-700 transition-colors">Home</a>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <a href="/tags" class="hover:text-primary-700 transition-colors">Tags</a>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span class="text-gray-900">{{ .Title }}</span>
+            </nav>
+
+            <!-- Tag Badge -->
+            <div
+                class="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-primary-700 text-white text-base font-medium mb-6 shadow-lg shadow-primary-700/30 animate-fade-in-up animation-delay-100">
+                <i data-lucide="tag" class="w-5 h-5"></i>
+                <span>{{ .Title }}</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 animate-fade-in-up animation-delay-200">
+                #{{ .Title }}
+            </h1>
+            <p class="text-xl text-gray-600 animate-fade-in-up animation-delay-300">
+                {{ .Pages | len }}件の記事
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Articles with this Tag -->
+<section class="container mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    {{ if .Pages }}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {{ range .Pages }}
+        <article class="blog-card animate-on-scroll group">
+            <!-- Image -->
+            <div
+                class="relative overflow-hidden rounded-t-xl aspect-video bg-gradient-to-br from-primary-100 to-primary-50">
+                {{ if .Params.image }}
+                <img src="{{ .Params.image }}" alt="{{ .Title }}"
+                    class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                {{ else }}
+                <div class="w-full h-full flex items-center justify-center">
+                    <i data-lucide="file-text" class="w-16 h-16 text-primary-300"></i>
+                </div>
+                {{ end }}
+
+                <!-- Category Badge -->
+                {{ with .Params.categories }}
+                <div class="absolute top-4 left-4">
+                    <span
+                        class="px-3 py-1 bg-primary-700 text-white text-sm font-medium rounded-full backdrop-blur-sm shadow-lg">
+                        {{ index . 0 }}
+                    </span>
+                </div>
+                {{ end }}
+            </div>
+
+            <!-- Content -->
+            <div class="p-6">
+                <!-- Meta -->
+                <div class="flex items-center space-x-4 text-sm text-gray-500 mb-3">
+                    <span class="flex items-center space-x-1">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
+                    </span>
+                    <span class="flex items-center space-x-1">
+                        <i data-lucide="clock" class="w-4 h-4"></i>
+                        <span>{{ .ReadingTime }}分</span>
+                    </span>
+                </div>
+
+                <!-- Title -->
+                <h2
+                    class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary-700 transition-colors">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </h2>
+
+                <!-- Excerpt -->
+                <p class="text-gray-600 mb-4 line-clamp-2 text-sm leading-relaxed">
+                    {{ .Summary }}
+                </p>
+
+                <!-- Tags -->
+                {{ if .Params.tags }}
+                <div class="flex flex-wrap gap-2 mb-4">
+                    {{ range first 3 .Params.tags }}
+                    <a href="/tags/{{ . | urlize }}" class="tag">{{ . }}</a>
+                    {{ end }}
+                </div>
+                {{ end }}
+
+                <!-- Read More Link -->
+                <a href="{{ .RelPermalink }}"
+                    class="inline-flex items-center space-x-2 text-primary-700 font-medium group/link">
+                    <span>続きを読む</span>
+                    <i data-lucide="arrow-right"
+                        class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </article>
+        {{ end }}
+    </div>
+    {{ else }}
+    <div class="text-center py-12">
+        <i data-lucide="inbox" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
+        <p class="text-gray-500 text-lg">このタグの記事がまだありません</p>
+    </div>
+    {{ end }}
+</section>
+
+<!-- Related Tags -->
+{{ $currentTag := .Title }}
+{{ $relatedTags := slice }}
+{{ range .Pages }}
+{{ range .Params.tags }}
+{{ if ne . $currentTag }}
+{{ if not (in $relatedTags .) }}
+{{ $relatedTags = $relatedTags | append . }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ end }}
+
+{{ if $relatedTags }}
+<section class="bg-gray-50 py-16 sm:py-20">
+    <div class="container mx-auto px-4 sm:px-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+            <i data-lucide="tags" class="w-6 h-6 mr-2 text-primary-700"></i>
+            関連タグ
+        </h2>
+        <div class="flex flex-wrap gap-3 max-w-4xl">
+            {{ range first 10 $relatedTags }}
+            <a href="/tags/{{ . | urlize }}"
+                class="inline-flex items-center space-x-2 px-5 py-3 bg-white hover:bg-primary-700 text-gray-700 hover:text-white rounded-xl font-medium transition-all duration-300 shadow-sm hover:shadow-lg transform hover:-translate-y-1 border border-gray-200 hover:border-primary-700 group">
+                <i data-lucide="tag" class="w-4 h-4"></i>
+                <span>{{ . }}</span>
+            </a>
+            {{ end }}
+        </div>
+
+        <div class="mt-8">
+            <a href="/tags"
+                class="inline-flex items-center space-x-2 text-primary-700 hover:text-primary-900 font-medium transition-colors">
+                <span>すべてのタグを見る</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{{ end }}
+
+<!-- Pagination -->
+{{ if or .Paginator.HasPrev .Paginator.HasNext }}
+<section class="container mx-auto px-4 sm:px-6 pb-16 sm:pb-20">
+    <nav class="flex items-center justify-center space-x-4">
+        {{ if .Paginator.HasPrev }}
+        <a href="{{ .Paginator.Prev.URL }}" class="btn-secondary">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            <span>前へ</span>
+        </a>
+        {{ end }}
+
+        <span class="text-gray-600">
+            {{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}
+        </span>
+
+        {{ if .Paginator.HasNext }}
+        <a href="{{ .Paginator.Next.URL }}" class="btn-secondary">
+            <span>次へ</span>
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </a>
+        {{ end }}
+    </nav>
+</section>
+{{ end }}
+
+<script>
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    });
+</script>
+
+{{ end }}

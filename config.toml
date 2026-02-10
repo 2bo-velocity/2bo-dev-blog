@@ -9,6 +9,10 @@ paginate = 5
   tag = "tags"
   category = "categories"
 
+[params]
+  description = "2bo.dev - 月1アプリ開発で学んだ技術ノウハウ"
+  images = ["/images/og-image.png"]
+
 [markup]
   [markup.highlight]
     style = "github"

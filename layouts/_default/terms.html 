@@ -1,0 +1,131 @@
+{{ define "main" }}
+
+<!-- Hero Section for Tags -->
+<section class="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-primary-50 py-16 sm:py-20">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, #1e40af 1px, transparent 0); background-size: 40px 40px;"></div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 relative">
+        <div class="max-w-3xl">
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6 animate-fade-in-up">
+                <i data-lucide="tag" class="w-4 h-4"></i>
+                <span>技術タグ一覧</span>
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 animate-fade-in-up animation-delay-100">
+                タグ
+            </h1>
+            <p class="text-xl text-gray-600 animate-fade-in-up animation-delay-200">
+                {{ len .Data.Terms }}個の技術タグで{{ len .Site.RegularPages }}件の記事を分類
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Tags Cloud -->
+<section class="container mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    {{ if .Data.Terms }}
+    <div class="max-w-5xl mx-auto">
+        <!-- Popular Tags -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <i data-lucide="trending-up" class="w-6 h-6 mr-2 text-primary-700"></i>
+                人気のタグ
+            </h2>
+            <div class="flex flex-wrap gap-3">
+                {{ range first 10 .Data.Terms.ByCount }}
+                <a href="{{ .Page.RelPermalink }}" 
+                   class="group inline-flex items-center space-x-2 px-6 py-3 bg-white hover:bg-primary-700 text-gray-700 hover:text-white rounded-xl font-medium transition-all duration-300 shadow-sm hover:shadow-lg transform hover:-translate-y-1 border border-gray-200 hover:border-primary-700">
+                    <i data-lucide="tag" class="w-4 h-4"></i>
+                    <span>{{ .Page.Title }}</span>
+                    <span class="text-sm opacity-70 bg-gray-100 group-hover:bg-white/20 px-2 py-0.5 rounded-full">({{ .Count }})</span>
+                </a>
+                {{ end }}
+            </div>
+        </div>
+
+        <!-- All Tags (Alphabetical) -->
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <i data-lucide="list" class="w-6 h-6 mr-2 text-primary-700"></i>
+                すべてのタグ
+            </h2>
+            
+            <!-- Alphabet Navigation -->
+            <div class="mb-6 flex flex-wrap gap-2">
+                {{ $tags := .Data.Terms.Alphabetical }}
+                {{ $firstLetters := slice }}
+                {{ range $tags }}
+                    {{ $firstLetter := substr .Page.Title 0 1 | upper }}
+                    {{ if not (in $firstLetters $firstLetter) }}
+                        {{ $firstLetters = $firstLetters | append $firstLetter }}
+                    {{ end }}
+                {{ end }}
+                {{ range $firstLetters }}
+                <a href="#{{ . }}" class="px-3 py-1 bg-gray-100 hover:bg-primary-100 text-gray-700 hover:text-primary-700 text-sm rounded-lg transition-colors duration-200 font-medium">
+                    {{ . }}
+                </a>
+                {{ end }}
+            </div>
+
+            <!-- Tags by Letter -->
+            <div class="space-y-8">
+                {{ $currentLetter := "" }}
+                {{ range $tags }}
+                    {{ $firstLetter := substr .Page.Title 0 1 | upper }}
+                    {{ if ne $firstLetter $currentLetter }}
+                        {{ $currentLetter = $firstLetter }}
+                        <div id="{{ $firstLetter }}" class="scroll-mt-20">
+                            <h3 class="text-xl font-bold text-primary-700 mb-4 pb-2 border-b border-gray-200">
+                                {{ $firstLetter }}
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {{ end }}
+                    
+                    <a href="{{ .Page.RelPermalink }}" 
+                       class="group p-4 bg-white hover:bg-gray-50 border border-gray-200 hover:border-primary-700 rounded-lg transition-all duration-300 hover:shadow-md">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="tag" class="w-4 h-4 text-gray-400 group-hover:text-primary-700"></i>
+                                <span class="font-medium text-gray-900 group-hover:text-primary-700">{{ .Page.Title }}</span>
+                            </div>
+                            <span class="text-sm text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">{{ .Count }}</span>
+                        </div>
+                    </a>
+                    
+                    {{ $nextIndex := add 1 (index (seq (len $tags)) .) }}
+                    {{ if lt $nextIndex (len $tags) }}
+                        {{ $nextTag := index $tags $nextIndex }}
+                        {{ $nextLetter := substr $nextTag.Page.Title 0 1 | upper }}
+                        {{ if ne $nextLetter $currentLetter }}
+                            </div>
+                        </div>
+                        {{ end }}
+                    {{ else }}
+                        </div>
+                    </div>
+                    {{ end }}
+                {{ end }}
+            </div>
+        </div>
+    </div>
+    {{ else }}
+    <div class="text-center py-12">
+        <i data-lucide="tag" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
+        <p class="text-gray-500 text-lg">タグがまだありません</p>
+    </div>
+    {{ end }}
+</section>
+
+<script>
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    });
+</script>
+
+{{ end }}

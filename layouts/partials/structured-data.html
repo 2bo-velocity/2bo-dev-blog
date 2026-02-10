@@ -1,0 +1,17 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": {{ if .IsPage }}"BlogPosting"{{ else }}"WebSite"{{ end }},
+  "headline": {{ if .Title }}"{{ .Title }}"{{ else }}"{{ .Site.Title }}"{{ end }},
+  "description": {{ if .Description }}"{{ .Description }}"{{ else }}"{{ .Site.Params.description }}"{{ end }},
+  "url": "{{ .Permalink }}"
+  {{ if .IsPage }},
+  "datePublished": "{{ .Date.Format `2006-01-02T15:04:05Z07:00` }}",
+  "dateModified": "{{ .Lastmod.Format `2006-01-02T15:04:05Z07:00` }}",
+  "author": {
+    "@type": "Person",
+    "name": {{ if .Params.author }}"{{ .Params.author }}"{{ else }}"2bo"{{ end }}
+  }
+  {{ end }}
+}
+</script>
